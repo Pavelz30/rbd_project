@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employees List</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('/static/images/snow.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .table-container {
+            max-width: 1300px;
+        }
+        .text-section {
+            background-color: rgba(185, 191, 253, 0.8);
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .table-custom {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0; /* Убирает отступы между ячейками */
+            border: none; /* Убирает стандартные границы ячеек */
+            padding: 8px;
+            text-align: left;
+        }
+        .table-custom tr {
+            border-bottom: 3px solid #e6e6e6; /* Толстая граница между строками */
+        }
+        .table-custom th, .table-custom td {
+            font-size: 20px; /* Увеличенный размер шрифта */
+        }
+    </style>
+</head>
+<body>
+    <br>
+    <div class="container table-container">
+        <h2 class="text-center">Список сотрудников</h2>
+    </div>
+    <div class="container table-container text-section">
+        <form method="GET" action="{{ url_for('employees_filter') }}" class="mb-3">
+            <div class="form-row">
+                <div class="col">
+                    <input type="text" name="employee_name" class="form-control" placeholder="Имя сотрудника">
+                </div>
+                <div class="col">
+                    <input type="text" name="employee_surname" class="form-control" placeholder="Фамилия сотрудника">
+                </div>
+                <div class="col">
+                    <select name="post" class="form-control">
+                        <option value="">Все статусы</option>
+                        <option value="Senior">Старший менеджер</option>
+                        <option value="Middle Manager">Средний менеджер</option>
+                        <option value="Junior Manager">Младший менеджер</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary">Фильтр</button>
+                    <a href="{{ url_for('employees_filter') }}" class="btn btn-secondary">Сбросить</a>
+                    <a href="{{ url_for('index') }}" class="btn btn-danger">Назад</a>
+                </div>
+            </div>
+        </form>
+        <hr class="custom-hr">
+        <form method="POST" action="/add_employee">
+            <div class="form-row">
+                <div class="col">
+                    <input type="text" name="name" class="form-control" placeholder="Имя нового сотрудника" required>
+                </div>
+                <div class="col">
+                    <input type="text" name="surname" class="form-control" placeholder="Фамилия сотрудника" required>
+                </div>
+                <div class="col">
+                    <input type="text" name="birthday" class="form-control" placeholder="День рождения" required>
+                </div>
+                <div class="col">
+                    <select name="post" class="form-control">
+                        <option value="">Все статусы</option>
+                        <option value="Senior">Старший менеджер</option>
+                        <option value="Middle Manager">Средний менеджер</option>
+                        <option value="Junior Manager">Младший менеджер</option>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-success">Добавить сотрудника</button>
+                </div>
+            </div>
+        </form>
+        <hr class="custom-hr">
+        <form method="POST" action="/delete_employee">
+            <div class="form-row">
+                <div class="col">
+                    <input type="text" name="id" class="form-control" placeholder="Id клиента" required>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-danger">Удалить сотрудника</button>
+                </div>
+            </div>
+        </form>
+        <br>
+        <div class="container table-container table-custom">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="alert mt-4">
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Имя</th>
+                        <th>Фамилия</th>
+                        <th>День рождения</th>
+                        <th>Должность</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for employee in employees %}
+                    <tr>
+                        <td>{{ employee.id }}</td>
+                        <td>{{ employee.name }}</td>
+                        <td>{{ employee.surname }}</td>
+                        <td>{{ employee.birthday }}</td>
+                        <td>{{ employee.post }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
+

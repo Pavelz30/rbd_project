@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добро пожаловать!!!</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('/static/images/valenki.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative; 
+        }
+        .main-container {
+            text-align: center;
+        }
+        .btn-custom {
+            margin: 10px;
+            background-color: #8b4513;
+            border-color: #8b4513;
+            color: white;
+        }
+        .btn-custom:hover {
+            background-color: #a0522d;
+        }
+        .logout-button {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+        .text-section {
+            background-color: rgba(248, 249, 250, 0.5);
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .big-button {
+            font-size: 1rem; /* Увеличение размера текста в кнопке */
+            padding: 15px 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">    
+        <div class="text-section">
+            <h1 class="mb-4">Добро пожаловать в админку отслеживания заказов от Павла Заводяна!</h1>
+        </div>
+        <div>
+            <a href="/clients" class="btn btn-custom big-button">Клиенты</a>
+            <a href="/employees" class="btn btn-custom big-button">Сотрудники</a>
+            <a href="/orders" class="btn btn-custom big-button" btn-primary>Заказы</a>
+        </div>
+        <a href="/logout" class="btn btn-danger logout-button big-button">Выход</a>
+    </div>
+</body>
+</html>
+
