@@ -57,7 +57,7 @@
             <div class="col">
                 <select name="status" class="form-control">
                     <option value="">Все статусы</option>
-                    <option value="Сreated">Cоздано</option>
+                    <option value="Created">Cоздано</option>
                     <option value="Awaiting Payment">Ожидание оплаты</option>
                     <option value="In Process">В процессе</option>
                     <option value="Ready for Pickup">Готов к самовывозу</option>
@@ -75,7 +75,7 @@
         </div>
     </form>
     <hr class="custom-hr">
-    <form method="POST" action="/add_order">
+    <form method="POST" action="/order_action">
         <div class="form-row">
             <div class="col">
                 <input type="text" name="employee_id" class="form-control" placeholder="Id cотрудника" required>
@@ -89,7 +89,7 @@
             <div class="col">
                 <select name="status" class="form-control">
                     <option value="">Все статусы</option>
-                    <option value="Сreated">Cоздано</option>
+                    <option value="Created">Cоздано</option>
                     <option value="Awaiting Payment">Ожидание оплаты</option>
                     <option value="In Process">В процессе</option>
                     <option value="Ready for Pickup">Готов к самовывозу</option>
@@ -99,9 +99,15 @@
             <div class="col">
                 <input type="text" name="cost" class="form-control" placeholder="Стоимость" required>
             </div>
-            <div class="col-auto">
-                <button type="submit" class="btn btn-success">Добавить заказ</button>
+	        <div class="col-auto">
+            	<button type="submit" name="action" value="add" class="btn btn-success">Добавить заказ</button>
+       	    </div>
+            <div class="col">
+                <input type="text" name="order_id" class="form-control" placeholder="Изменяемый id">
             </div>
+            <div class="col-auto">
+                    <button type="submit" name="action" value="update" class="btn btn-primary">Изменить заказ</button>
+       	    </div>
         </div>
     </form>
     <hr class="custom-hr">

@@ -237,8 +237,10 @@ def delete_emplyee():
     return redirect(url_for('employees_filter'))
 
 
-@app.route('/add_order', methods=['POST'])
-def add_order():
+@app.route('/order_action', methods=['POST'])
+def order_action():
+    action = request.form.get('action', '')
+
     client_id = request.form.get('client_id', '')
     employee_id = request.form.get('employee_id', '')
     compound = request.form.get('compound', '')
@@ -248,12 +250,39 @@ def add_order():
     if not client_id or not employee_id or not compound or not status or not cost:
         flash("Все поля формы должны быть заполнены.", "warning")
         return redirect(url_for('orders_filter'))
+
+    if action == 'add':
+        # Логика добавления
+        new_order = dbm.Orders(idEm=employee_id, idCl=client_id, compound=compound, status=status, cost=cost)
+        try:
+            db.session.add(new_order)
+            db.session.commit()
+        except Exception as e:
+            flash("Ошибка при вводе! Проверьте id клиента и сотрудника!", "warning")
+            return redirect(url_for('orders_filter'))
+        flash("Заказ успешно добавлен!", "success")
+        
+    elif action == 'update':
+        order_id = request.form.get('order_id', None)
+        if order_id is None:
+            flash("Не указан заказ для обновления.", "warning")
+            return redirect(url_for('orders_filter'))
+        
+        order = dbm.Orders.query.get(order_id)
+        if not order:
+            flash("Заказ не найден.", "warning")
+            return redirect(url_for('orders_filter'))
+
+        order.idCl = client_id
+        order.idEm = employee_id
+        order.compound = compound
+        order.status = status
+        order.cost = cost
+        db.session.commit()
+        flash("Заказ успешно обновлен!", "success")
     
-    new_order = dbm.Orders(idEm=employee_id, idCl=client_id, compound=compound, status=status, cost=cost)
-    db.session.add(new_order)
-    db.session.commit()
-    flash("Заказ успешно добавлен!", "success")
     return redirect(url_for('orders_filter'))
+
 
 
 @app.route('/delete_order', methods=['POST'])
