@@ -252,7 +252,6 @@ def order_action():
         return redirect(url_for('orders_filter'))
 
     if action == 'add':
-        # Логика добавления
         new_order = dbm.Orders(idEm=employee_id, idCl=client_id, compound=compound, status=status, cost=cost)
         try:
             db.session.add(new_order)
